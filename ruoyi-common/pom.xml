@@ -119,6 +119,49 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--        <groupId>org.projectlombok</groupId>-->
+<!--        <artifactId>lombok</artifactId>-->
+<!--        <version>1.18.28</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.geotools</groupId>-->
+<!--            <artifactId>gt-main</artifactId>-->
+<!--            <version>25.2</version>-->
+<!--        </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.huaban</groupId>-->
+<!--                <artifactId>jieba-analysis</artifactId>-->
+<!--                <version>1.0.2</version>-->
+<!--            </dependency>-->
     </dependencies>
+
+<!--    上下两边注释的要一起搭配使用-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>osgeo</id>-->
+<!--            <name>OSGeo Release Repository</name>-->
+<!--            <url>https://repo.osgeo.org/repository/release/</url>-->
+<!--            <snapshots><enabled>false</enabled></snapshots>-->
+<!--            <releases><enabled>true</enabled></releases>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>osgeo-snapshot</id>-->
+<!--            <name>OSGeo Snapshot Repository</name>-->
+<!--            <url>https://repo.osgeo.org/repository/snapshot/</url>-->
+<!--            <snapshots><enabled>true</enabled></snapshots>-->
+<!--            <releases><enabled>false</enabled></releases>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+
 
 </project>

@@ -26,7 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="dept"    javaType="SysDept"         resultMap="deptResult" />
         <collection  property="roles"   javaType="java.util.List"  resultMap="RoleResult" />
     </resultMap>
-	
+
+	<resultMap type="SysUser" id="SysUserResultByRole">
+		<result property="nickName"     column="nick_name"    />
+	</resultMap>
+
+
     <resultMap id="deptResult" type="SysDept">
         <id     property="deptId"    column="dept_id"     />
         <result property="parentId"  column="parent_id"   />
@@ -84,6 +89,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
 	</select>
+
+
+
+
+	<select id="getListByRole" parameterType="SysRole" resultMap="SysUserResultByRole">
+		select nick_name from sys_user where user_id in
+		                                     ( SELECT user_id from sys_user_role where role_id =
+		                                            (select role_id from sys_role where role_name = #{roleName} )
+		                                                                         )
+	</select>
+
+
+
+
+
+
+
+
 	
 	<select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
 	    select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time

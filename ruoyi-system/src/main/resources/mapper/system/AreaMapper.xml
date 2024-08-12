@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AreaMapper">
+    
+    <resultMap type="Area" id="AreaResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="name"    column="name"    />
+    </resultMap>
+
+    <sql id="selectAreaVo">
+        select id, parent_id, name from area
+    </sql>
+
+    <select id="selectAreaList" parameterType="Area" resultMap="AreaResult">
+        <include refid="selectAreaVo"/>
+        <where>  
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAreaById" parameterType="Integer" resultMap="AreaResult">
+        <include refid="selectAreaVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertArea" parameterType="Area" useGeneratedKeys="true" keyProperty="id">
+        insert into area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">parent_id,</if>
+            <if test="name != null">name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">#{parentId},</if>
+            <if test="name != null">#{name},</if>
+         </trim>
+    </insert>
+
+    <update id="updateArea" parameterType="Area">
+        update area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="name != null">name = #{name},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAreaById" parameterType="Integer">
+        delete from area where id = #{id}
+    </delete>
+
+    <delete id="deleteAreaByIds" parameterType="String">
+        delete from area where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysRole;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
@@ -18,6 +20,10 @@ public interface SysUserMapper
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUserList(SysUser sysUser);
+
+
+    public List<SysUser> getListByRole(SysRole sysRole);
+
 
     /**
      * 根据条件分页查询已配用户角色列表

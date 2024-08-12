@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TaskSourceMapper">
+    
+    <resultMap type="TaskSource" id="TaskSourceResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="count"    column="count"    />
+    </resultMap>
+
+    <resultMap type="TaskSource" id="TaskSourceResultByIdAndName">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+    </resultMap>
+
+    <sql id="selectTaskSourceVo">
+        select id, name,create_by,create_time,update_by,update_time,remark from task_source
+    </sql>
+
+    <sql id="selectTaskSourceVoByIdAndName">
+        select id, name from task_source
+    </sql>
+
+    <select id="selectTaskSourceList" parameterType="TaskSource" resultMap="TaskSourceResult">
+        select
+        task_source.id,
+        task_source.name,
+        task_source.create_by,
+        task_source.create_time,
+        task_source.update_by,
+        task_source.update_time,
+        (select COUNT(*) from task where source =  task_source.id ) as count
+        from task_source
+
+        <where>
+            <if test="name != null  and name != ''"> and task_source.name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+
+    <select id="selectTaskSourceAllList" parameterType="TaskSource" resultMap="TaskSourceResultByIdAndName">
+        <include refid="selectTaskSourceVoByIdAndName"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+
+    
+    <select id="selectTaskSourceById" parameterType="Long" resultMap="TaskSourceResult">
+        <include refid="selectTaskSourceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTaskSource" parameterType="TaskSource" useGeneratedKeys="true" keyProperty="id">
+        insert into task_source
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskSource" parameterType="TaskSource">
+        update task_source
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskSourceById" parameterType="Long">
+        delete from task_source where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskSourceByIds" parameterType="String">
+        delete from task_source where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

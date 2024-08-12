@@ -78,6 +78,21 @@ public class SysUserServiceImpl implements ISysUserService
         return userMapper.selectUserList(user);
     }
 
+
+    /**
+     * 根据条件分页查询用户列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> getListByRole(SysRole role)
+    {
+        return userMapper.getListByRole(role);
+    }
+
+
     /**
      * 根据条件分页查询已分配用户角色列表
      * 

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TaskMapper">
+    
+    <resultMap type="Task" id="TaskResult">
+        <result property="id"    column="id"    />
+        <result property="priority"    column="priority"    />
+        <result property="source"    column="source"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="county"    column="county"    />
+        <result property="type"    column="type"    />
+        <result property="clientCode"    column="client_code"    />
+        <result property="url"    column="url"    />
+        <result property="ip"    column="ip"    />
+        <result property="penetrationEndTime"    column="penetration_end_time"    />
+        <result property="analysisEndTime"    column="analysis_end_time"    />
+        <result property="penetrationStatus"    column="penetration_status"    />
+        <result property="analysisStatus"    column="analysis_status"    />
+        <result property="penetrationFollowPerson"    column="penetration_follow_person"    />
+        <result property="analysisFollowPerson"    column="analysis_follow_person"    />
+        <result property="backendAddress"    column="backend_address"    />
+        <result property="account"    column="account"    />
+        <result property="password"    column="password"    />
+        <result property="employerRemark"    column="employer_remark"    />
+        <result property="penetrationRemark"    column="penetration_remark"    />
+        <result property="analysisRemark"    column="analysis_remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="parentTaskId"    column="parent_task_id"    />
+        <result property="penetrationStatusResult"    column="penetration_status_result"    />
+        <result property="parentTaskRadio"    column="parent_task_radio"    />
+    </resultMap>
+
+
+    <resultMap type="Task" id="TaskResultByExport">
+        <result property="id"    column="id"    />
+        <result property="priority"    column="priority"    />
+        <result property="source"    column="source"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="county"    column="county"    />
+        <result property="type"    column="type"    />
+        <result property="clientCode"    column="client_code"    />
+        <result property="url"    column="url"    />
+        <result property="ip"    column="ip"    />
+        <result property="penetrationEndTime"    column="penetration_end_time"    />
+        <result property="analysisEndTime"    column="analysis_end_time"    />
+        <result property="penetrationStatus"    column="penetration_status"    />
+        <result property="analysisStatus"    column="analysis_status"    />
+        <result property="penetrationFollowPerson"    column="penetration_follow_person"    />
+        <result property="analysisFollowPerson"    column="analysis_follow_person"    />
+        <result property="backendAddress"    column="backend_address"    />
+        <result property="account"    column="account"    />
+        <result property="password"    column="password"    />
+        <result property="employerRemark"    column="employer_remark"    />
+        <result property="penetrationRemark"    column="penetration_remark"    />
+        <result property="analysisRemark"    column="analysis_remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="parentTaskId"    column="parent_task_id"    />
+        <result property="penetrationStatusResult"    column="penetration_status_result"    />
+        <result property="parentTaskRadio"    column="parent_task_radio"    />
+
+        <result property="sourceValue"    column="sourceValue"    />
+        <result property="typeValue"    column="typeValue"    />
+        <result property="penetrationStatusResultValue"    column="penetrationStatusResultValue"    />
+    </resultMap>
+
+
+    <sql id="selectTaskVo">
+        select id, priority, source, province, city, county, type, client_code, url, ip, penetration_end_time, analysis_end_time, penetration_status, analysis_status, penetration_follow_person, analysis_follow_person, backend_address, account, password, employer_remark, penetration_remark, analysis_remark, create_by, create_time, update_by, update_time, remark,parent_task_id,penetration_status_result,parent_task_radio from task
+    </sql>
+
+    <select id="selectTaskList" parameterType="Task" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="priority != null "> and priority = #{priority}</if>
+            <if test="source != null "> and source = #{source}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="county != null  and county != ''"> and county = #{county}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="clientCode != null  and clientCode != ''"> and client_code = #{clientCode}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="penetrationEndTime != null "> and date_format(penetration_end_time, '%Y%m%d') =  date_format(#{penetrationEndTime},'%Y%m%d')</if>
+            <if test="analysisEndTime != null "> and date_format(analysis_end_time, '%Y%m%d') =  date_format(#{analysisEndTime},'%Y%m%d')</if>
+            <if test="penetrationStatus != null "> and penetration_status = #{penetrationStatus}</if>
+            <if test="analysisStatus != null "> and analysis_status = #{analysisStatus}</if>
+            <if test="penetrationFollowPerson != null "> and penetration_follow_person = #{penetrationFollowPerson}</if>
+            <if test="analysisFollowPerson != null "> and analysis_follow_person = #{analysisFollowPerson}</if>
+            <if test="backendAddress != null  and backendAddress != ''"> and backend_address = #{backendAddress}</if>
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="employerRemark != null  and employerRemark != ''"> and employer_remark = #{employerRemark}</if>
+            <if test="penetrationRemark != null  and penetrationRemark != ''"> and penetration_remark = #{penetrationRemark}</if>
+            <if test="analysisRemark != null  and analysisRemark != ''"> and analysis_remark = #{analysisRemark}</if>
+            <if test="analysisRemark != null  and analysisRemark != ''"> and analysis_remark = #{analysisRemark}</if>
+            <if test="penetrationStatusResult != null  and penetrationStatusResult != ''"> and penetration_status_result = #{penetrationStatusResult}</if>
+            <if test="createTime != null">and date_format(create_time, '%Y%m%d') =  date_format(#{createTime},'%Y%m%d')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+            </if>
+            <if test="parentTaskId != null  and parentTaskId != '' and parentTaskId != -1 "> or parent_task_id = #{parentTaskId}</if>
+        </where>
+    </select>
+
+
+
+
+
+
+
+    <select id="selectTaskListByExport" parameterType="Task" resultMap="TaskResultByExport">
+        select task.id,
+
+        task.priority,
+        task.province, task.city, task.county, task.client_code, task.url,
+        task.ip, task.penetration_end_time, task.analysis_end_time,task. penetration_status,
+        task.analysis_status, task.penetration_follow_person, task.analysis_follow_person,
+        task.backend_address, task.account, task.password, task.employer_remark, task.penetration_remark,
+        task.analysis_remark, task.create_by, task.create_time, task.update_by, task.update_time, task.remark,
+        task.parent_task_id,
+
+               task_source.name as sourceValue ,
+               task_status.`name` as `penetrationStatusResultValue`,
+               task_type.`name` as typeValue
+        from task
+        INNER JOIN  task_source on task.source = task_source.id
+        INNER JOIN  task_status  on  task.penetration_status_result =task_status.id
+        INNER JOIN  task_type on task.type = task_type.id
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="priority != null "> and priority = #{priority}</if>
+            <if test="source != null "> and source = #{source}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="county != null  and county != ''"> and county = #{county}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="clientCode != null  and clientCode != ''"> and client_code = #{clientCode}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="penetrationEndTime != null "> and date_format(penetration_end_time, '%Y%m%d') =  date_format(#{penetrationEndTime},'%Y%m%d')</if>
+            <if test="analysisEndTime != null "> and date_format(analysis_end_time, '%Y%m%d') =  date_format(#{analysisEndTime},'%Y%m%d')</if>
+            <if test="penetrationStatus != null "> and penetration_status = #{penetrationStatus}</if>
+            <if test="analysisStatus != null "> and analysis_status = #{analysisStatus}</if>
+            <if test="penetrationFollowPerson != null "> and penetration_follow_person = #{penetrationFollowPerson}</if>
+            <if test="analysisFollowPerson != null "> and analysis_follow_person = #{analysisFollowPerson}</if>
+            <if test="backendAddress != null  and backendAddress != ''"> and backend_address = #{backendAddress}</if>
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="employerRemark != null  and employerRemark != ''"> and employer_remark = #{employerRemark}</if>
+            <if test="penetrationRemark != null  and penetrationRemark != ''"> and penetration_remark = #{penetrationRemark}</if>
+            <if test="analysisRemark != null  and analysisRemark != ''"> and analysis_remark = #{analysisRemark}</if>
+            <if test="analysisRemark != null  and analysisRemark != ''"> and analysis_remark = #{analysisRemark}</if>
+            <if test="penetrationStatusResult != null  and penetrationStatusResult != ''"> and penetration_status_result = #{penetrationStatusResult}</if>
+            <if test="createTime != null">and date_format(create_time, '%Y%m%d') =  date_format(#{createTime},'%Y%m%d')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+            </if>
+            <if test="parentTaskId != null  and parentTaskId != '' and parentTaskId != -1 "> or parent_task_id = #{parentTaskId}</if>
+        </where>
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <select id="selectTaskById" parameterType="Integer" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTask" parameterType="Task" useGeneratedKeys="true" keyProperty="id">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="priority != null">priority,</if>
+            <if test="source != null">source,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="county != null">county,</if>
+            <if test="type != null">type,</if>
+            <if test="clientCode != null">client_code,</if>
+            <if test="url != null">url,</if>
+            <if test="ip != null">ip,</if>
+            <if test="penetrationEndTime != null">penetration_end_time,</if>
+            <if test="analysisEndTime != null">analysis_end_time,</if>
+            <if test="penetrationStatus != null">penetration_status,</if>
+            <if test="analysisStatus != null">analysis_status,</if>
+            <if test="penetrationFollowPerson != null">penetration_follow_person,</if>
+            <if test="analysisFollowPerson != null">analysis_follow_person,</if>
+            <if test="backendAddress != null">backend_address,</if>
+            <if test="account != null">account,</if>
+            <if test="password != null">password,</if>
+            <if test="employerRemark != null">employer_remark,</if>
+            <if test="penetrationRemark != null">penetration_remark,</if>
+            <if test="analysisRemark != null">analysis_remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="priority != null">#{priority},</if>
+            <if test="source != null">#{source},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="county != null">#{county},</if>
+            <if test="type != null">#{type},</if>
+            <if test="clientCode != null">#{clientCode},</if>
+            <if test="url != null">#{url},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="penetrationEndTime != null">#{penetrationEndTime},</if>
+            <if test="analysisEndTime != null">#{analysisEndTime},</if>
+            <if test="penetrationStatus != null">#{penetrationStatus},</if>
+            <if test="analysisStatus != null">#{analysisStatus},</if>
+            <if test="penetrationFollowPerson != null">#{penetrationFollowPerson},</if>
+            <if test="analysisFollowPerson != null">#{analysisFollowPerson},</if>
+            <if test="backendAddress != null">#{backendAddress},</if>
+            <if test="account != null">#{account},</if>
+            <if test="password != null">#{password},</if>
+            <if test="employerRemark != null">#{employerRemark},</if>
+            <if test="penetrationRemark != null">#{penetrationRemark},</if>
+            <if test="analysisRemark != null">#{analysisRemark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTask" parameterType="Task">
+        update task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="county != null">county = #{county},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="clientCode != null">client_code = #{clientCode},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="penetrationEndTime != null">penetration_end_time = #{penetrationEndTime},</if>
+            <if test="analysisEndTime != null">analysis_end_time = #{analysisEndTime},</if>
+            <if test="penetrationStatus != null">penetration_status = #{penetrationStatus},</if>
+            <if test="analysisStatus != null">analysis_status = #{analysisStatus},</if>
+            <if test="penetrationFollowPerson != null">penetration_follow_person = #{penetrationFollowPerson},</if>
+            <if test="analysisFollowPerson != null">analysis_follow_person = #{analysisFollowPerson},</if>
+            <if test="backendAddress != null">backend_address = #{backendAddress},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="employerRemark != null">employer_remark = #{employerRemark},</if>
+            <if test="penetrationRemark != null">penetration_remark = #{penetrationRemark},</if>
+            <if test="analysisRemark != null">analysis_remark = #{analysisRemark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="parentTaskId != null">parent_task_id = #{parentTaskId},</if>
+            <if test="parentTaskRadio != null">parent_task_radio = #{parentTaskRadio},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskById" parameterType="Integer">
+        delete from task where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskByIds" parameterType="String">
+        delete from task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+    <update id="batchUdateTask">
+        update task set parent_task_id = #{parentTaskId} where id in (#{subTaskIds})
+    </update>
+
+</mapper>

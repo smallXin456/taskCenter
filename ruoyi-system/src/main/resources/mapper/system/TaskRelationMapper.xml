@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TaskRelationMapper">
+    
+    <resultMap type="TaskRelation" id="TaskRelationResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="parentTaskId"    column="parent_task_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTaskRelationVo">
+        select id, task_id, parent_task_id, create_by, create_time, update_by, update_time, remark from task_relation
+    </sql>
+
+    <select id="selectTaskRelationList" parameterType="TaskRelation" resultMap="TaskRelationResult">
+        <include refid="selectTaskRelationVo"/>
+        <where>  
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="parentTaskId != null "> and parent_task_id = #{parentTaskId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTaskRelationById" parameterType="Integer" resultMap="TaskRelationResult">
+        <include refid="selectTaskRelationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTaskRelation" parameterType="TaskRelation" useGeneratedKeys="true" keyProperty="id">
+        insert into task_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">task_id,</if>
+            <if test="parentTaskId != null">parent_task_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">#{taskId},</if>
+            <if test="parentTaskId != null">#{parentTaskId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskRelation" parameterType="TaskRelation">
+        update task_relation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="parentTaskId != null">parent_task_id = #{parentTaskId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskRelationById" parameterType="Integer">
+        delete from task_relation where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskRelationByIds" parameterType="String">
+        delete from task_relation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
